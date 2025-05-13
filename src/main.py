@@ -14,15 +14,10 @@ def sdm_guloso(s:list[int], f:list[int]):
     i = 0
 
     for k in range(1,len(f)):
-        print("k: ", k)
-        print("i: ", i)
-
         if s[k] > f[i]:
             x.append(k)
             i = k
     return x
-
-
 
 
 
