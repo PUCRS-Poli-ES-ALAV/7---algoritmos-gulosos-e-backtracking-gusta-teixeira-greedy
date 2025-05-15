@@ -4,7 +4,7 @@ import java.util.List;
 
 public class App{
     public static void main(String[] args) {
-        System.out.println(nRainhas(1000));
+        var resp = (nRainhas(4));
     }
 
     public static boolean isSafe(int linha, int coluna, int[][] tabuleiro){
@@ -28,21 +28,29 @@ public class App{
         return true;
     }
 
-    public static boolean colocarRainha(int linha, int [][] tabuleiro){
+    public static boolean colocarRainha(int linha, int [][] tabuleiro, ArrayList<Integer> res){
         if(linha == tabuleiro.length){
             return true;
         }
 
+       
         for(int coluna = 0; coluna < tabuleiro.length; coluna++){
-            if(isSafe(linha, coluna, tabuleiro)){
-                tabuleiro[linha][coluna] = 1;
-                if(colocarRainha(linha+1, tabuleiro)){
-                return true;
+            if(tabuleiro[linha][coluna] == 1){
+                return false;
             }
+            
+            
+            if(isSafe(linha, coluna, tabuleiro)){
+                
+                tabuleiro[linha][coluna] = 1;
+                res.add(coluna+1);
+                if(colocarRainha(linha+1, tabuleiro,res)){
+                    return true;
+                }
+
                 tabuleiro[linha][coluna] = 0;
             }
         }
-
         return false;
     }
 
@@ -51,19 +59,9 @@ public class App{
             throw new IllegalArgumentException("n < 2");
         }
         int tabuleiro [][] = new int[n][n];
-        List<Integer> resp = new ArrayList<>();
+        ArrayList<Integer> resp = new ArrayList<>();
+        colocarRainha(0, tabuleiro, resp);
         
-        if(colocarRainha(0, tabuleiro)){
-            for (int[] tabuleiro1 : tabuleiro) {
-                for (int j = 0; j < tabuleiro.length; j++) {
-                    if (tabuleiro1[j] == 1) {
-                        resp.add(j+1);
-                    }
-                }
-            }
-        }
-
-
         return resp;
 
         
